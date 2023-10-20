@@ -11,6 +11,13 @@ typedef struct {
     char password[MAX_LEN];
 } user;
 
+union user {
+    int active; 
+    struct { 
+        char name[20];   
+        char password[20]; 
+    } info; 
+};
 
 user users[MAX_USERS];
 int user_count = 0; 
@@ -97,6 +104,24 @@ void login_user() {
 
 
 int main() {
+
+    
+    union user u1; 
+
+    printf("Are you an active user? Enter 1 for yes or 0 for no\n");
+    scanf("%d", &u1.active);
+
+    if (u1.active == 1) {
+
+        printf("Enter username: ");
+        scanf("%s", u1.info.name);
+        printf("Enter password: ");
+        scanf("%s", u1.info.password);
+
+        printf("Successfully registered as %s.\n", u1.info.name);
+    } else {
+        printf("Sorry, you must be an active user to register.\n");
+    }
     
     int choice;
 
